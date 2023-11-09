@@ -1,0 +1,35 @@
+// https://aka.ms/devcontainer.json
+{
+	"name": "Existing Docker Compose (Extend)",
+	"dockerComposeFile": [
+		"../docker-compose.yml"
+	],
+	"service": "solax.local",
+	"workspaceFolder": "/var/www/html",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"GitHub.copilot",
+				"GitHub.copilot-chat",
+				"shufo.vscode-blade-formatter",
+				"onecentlin.laravel-blade",
+				"austenc.laravel-blade-spacer",
+				"amiralizadeh9480.laravel-extra-intellisense",
+				"ctf0.laravel-goto-controller",
+				"codingyu.laravel-goto-view",
+				"neilbrayfield.php-docblocker",
+				"xdebug.php-pack",
+				"bmewburn.vscode-intelephense-client",
+				"zobo.php-intellisense",
+				"esbenp.prettier-vscode",
+				"bradlc.vscode-tailwindcss"
+			],
+			"settings": {}
+		}
+	},
+	"remoteUser": "sail",
+	"postCreateCommand": "chown -R 1000:1000 /var/www/html 2>/dev/null || true"
+	// "forwardPorts": [],
+	// "runServices": [],
+	// "shutdownAction": "none",
+}
