@@ -1,5 +1,7 @@
 /* FILEPATH: /var/www/html/resources/css/app.css */
 
+@import './solarPanel.css';
+
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';

@@ -29,7 +29,7 @@ class CollectSolaxData extends Command
     public function handle()
     {
         // On instancie le service Solax
-        $solax = new SolaxService;
+        $solax = app(SolaxService::class);
 
         // On récupère et traite les données de l'onduleur
         $response = $solax->parse();
@@ -37,20 +37,7 @@ class CollectSolaxData extends Command
         // On crée un objet ProductionData si on a reçu des données
         if ($response)
         {
-            $productionData = ProductionData::create([
-                'yield_today' => $solax->yieldToday,
-                'grid_power' => $solax->gridPower,
-                'grid_voltage' => $solax->gridVoltage,
-                'grid_current' => $solax->gridCurrent,
-                'grid_freq' => $solax->gridFreq,
-                'pv1_power' => $solax->pv1->puissance,
-                'pv1_voltage' => $solax->pv1->tension,
-                'pv1_current' => $solax->pv1->intensite,
-                'pv2_power' => $solax->pv2->puissance,
-                'pv2_voltage' => $solax->pv2->tension,
-                'pv2_current' => $solax->pv2->intensite,
-                'measured_at' => Carbon::now()
-            ]);
+            return $response->save();
         }
     }
 }

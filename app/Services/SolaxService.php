@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+
+use App\Models\ProductionData;
 
 class SolaxService
 {
@@ -20,6 +23,8 @@ class SolaxService
     $feedInEnergy,$consumeEnergy,
     $pv1, 
     $pv2;
+
+    public $statusCode;
 
     private function read8BitUnsigned($n)
     {
@@ -49,33 +54,7 @@ class SolaxService
         }
     }
 
-    public function get()
-    {
-        $apiURL = "http://" . $this->apiURL;
-
-        $headers = [
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Accept' => '*/*'
-        ];
-
-        $body = [
-            'optType' => 'ReadRealTimeData',
-            'pwd' => env('ONDULEUR_PWD')
-        ];
-
-        try {
-            $response = Http::timeout(3)->asForm()
-                            ->withHeaders($headers)
-                            ->post($apiURL, $body);
-
-            $statusCode = $response->status();
-            $responseBody = json_decode($response->getBody(), true);
-        } catch (\Throwable $th) {
-            return false;
-        }
-
-        return $responseBody;
-    }
+    
 
     /**
      * This function parses the response from the inverter to get the data we need.
@@ -102,40 +81,77 @@ class SolaxService
      * @param [type] $response
      * @return void
      */
-    public function parse()
+    public function parse($debug = false)
     {
-        $response = $this->get();
+        if ($debug) {
+            $file = Storage::disk('local')->get('example-response.json');
+            $response = json_decode($file, true);
+            $this->statusCode = 200;
+        } else {
+            $response = $this->get();
+        }
 
         if (!$response) {
             return false;
         }
         $data = $response['Data'];
-
-        $this->yieldToday = $data[13] / 10;
         $this->yieldTotal = $this->read32BitUnsigned($data[11], $data[12]) / 10;
-
         $this->totalPower = $data[7] + $data[8];
         $this->feedInPower = $this->read32BitSigned($data[48], $data[49]);
-        $this->gridPower = $this->read16BitSigned($data[2]);
-        $this->gridVoltage = $data[0] / 10;
-        $this->gridCurrent = $this->read16BitSigned($data[1]) / 10;
-        $this->gridFreq = $data[9] / 100;
-
+        /**
+         * The data belows waits to be implemented
+         */
         $this->feedInEnergy = $this->read32BitUnsigned($data[50], $data[51]) / 100;
         $this->consumeEnergy = $this->read32BitUnsigned($data[52], $data[53]) / 100;
+        /* ------------------------------ */
 
-        $this->pv1 = (object) [
-            'puissance' => $data[7],
-            'tension' => $data[3] / 10,
-            'intensite' => $data[5] / 10
+        $productionData = new ProductionData();
+
+        $productionData->yield_today = $data[13] / 10;
+
+        $productionData->grid_power = $this->read16BitSigned($data[2]);
+        $productionData->grid_voltage = $data[0] / 10;
+        $productionData->grid_current = $this->read16BitSigned($data[1]) / 10;
+        $productionData->grid_freq = $data[9] / 100;
+
+        $productionData->pv1_power = $data[7];
+        $productionData->pv1_voltage = $data[3] / 10;
+        $productionData->pv1_current = $data[5] / 10;
+
+        $productionData->pv2_power = $data[8];
+        $productionData->pv2_voltage = $data[4] / 10;
+        $productionData->pv2_current = $data[6] / 10;
+
+        $productionData->measured_at = \Carbon\Carbon::now();
+
+        return $productionData;
+    }
+
+    public function get()
+    {
+        $apiURL = "http://" . $this->apiURL;
+
+        $headers = [
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Accept' => '*/*'
         ];
 
-        $this->pv2 = (object) [
-            'puissance' => $data[8],
-            'tension' => $data[4] / 10,
-            'intensite' => $data[6] / 10
+        $body = [
+            'optType' => 'ReadRealTimeData',
+            'pwd' => env('ONDULEUR_PWD')
         ];
 
-        return true;
+        try {
+            $response = Http::timeout(3)->asForm()
+                            ->withHeaders($headers)
+                            ->post($apiURL, $body);
+
+            $this->statusCode = $response->status();
+            $responseBody = json_decode($response->getBody(), true);
+        } catch (\Throwable $th) {
+            return false;
+        }
+
+        return $responseBody;
     }
 }

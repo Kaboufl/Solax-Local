@@ -1,0 +1,19 @@
+.solarPanel 
+{
+    background-color: #D1D1D1;
+    border-radius: 7px;
+    padding: 3px;
+    border: 1px solid #717171;
+    color: #ffffff;
+    width: 75px;
+    height: 125px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    margin: 2px;
+    gap: 2px;
+}
+.solarCell {
+    background-color: #272f6e;
+    border-radius: 4px;
+}

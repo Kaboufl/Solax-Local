@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Services\SolaxService;
+
+use App\Models\ProductionData;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,15 +17,13 @@ use App\Services\SolaxService;
 */
 
 Route::get('/', function (SolaxService $solax) {
-
     return view('home', compact('solax'));
 });
 
-Route::get('test', function () {
+Route::get('test', function (SolaxService $solax) {
     $file = Storage::disk('local')->get('example-response.json');
     $sample = json_decode($file, true);
 
-    $solax = new SolaxService;
     $response = $solax->parse();
     
     dump($solax);

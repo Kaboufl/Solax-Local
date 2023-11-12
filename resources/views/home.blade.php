@@ -7,11 +7,19 @@
     {{-- <meta http-equiv="refresh" content="3"> --}}
     <title>{{ __('Laravel - ').env('APP_NAME') }}</title>
 
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
-    <h1 class="text-7xl font-black text-red-700">Solax me voici</h1>
+<body class="bg-slate-500 px-4">
+    <h1 class="text-4xl font-black text-red-700">Suivi photovoltaïque</h1>
 
-    @dump($solax, $solax->get())
+    <main class="space-y-4">
+    @livewire('RealTime')
+    @livewire('DisplayGridPower')
+
+    </main>
+
+    {{-- @dump($solax, $solax->get()) --}}
+
+    {{-- @livewireChartsScripts --}}
 </body>
 </html>
