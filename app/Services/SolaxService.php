@@ -13,7 +13,6 @@ class SolaxService
     public function __construct($apiURL)
     {
         $this->apiURL = $apiURL;
-        $this->parse();
     }
 
     
@@ -81,7 +80,7 @@ class SolaxService
      * @param [type] $response
      * @return void
      */
-    public function parse($debug = false)
+    public function parse($debug = false): ProductionData
     {
         if ($debug) {
             $file = Storage::disk('local')->get('example-response.json');
@@ -92,7 +91,7 @@ class SolaxService
         }
 
         if (!$response) {
-            return false;
+            throw new \Exception("No response from inverter");
         }
         $data = $response['Data'];
         $this->yieldTotal = $this->read32BitUnsigned($data[11], $data[12]) / 10;
