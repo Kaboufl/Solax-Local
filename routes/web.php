@@ -20,13 +20,13 @@ Route::get('/', function (SolaxService $solax) {
     return view('home', compact('solax'));
 });
 
-Route::get('test', function (SolaxService $solax) {
-    $file = Storage::disk('local')->get('example-response.json');
-    $sample = json_decode($file, true);
+/**
+ * Dev route to integrate the final layout
+ * Inspiration : https://soft-ui-dashboard-laravel.creative-tim.com/dashboard
+ */
+Route::get('test', function () {
 
-    $response = $solax->parse();
-    
-    dump($solax);
+    return view('dashboard');
 });
 
 Route::get('/laravel', function () {
