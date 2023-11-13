@@ -21,9 +21,14 @@ class RealTime extends Component
 
     public function updateSolaxLive() {
         $solax = app(SolaxService::class);
-        $this->productionData = $solax->parse();
-        $this->totalPower = $solax->totalPower;
-        $this->apiStatus = $solax->statusCode;
+        try {
+            $this->productionData = $solax->parse();
+            $this->totalPower = $solax->totalPower;
+            $this->apiStatus = $solax->statusCode;
+        } catch (\Throwable $th) {
+            //throw $th;
+            return $solax;
+        }
         // Benchmark::dd(['get' => fn () => $solax->get(),
         //                 'parse' => fn () => $solax->parse()]);
     }

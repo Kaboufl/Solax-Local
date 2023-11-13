@@ -32,12 +32,15 @@ class CollectSolaxData extends Command
         $solax = app(SolaxService::class);
 
         // On récupère et traite les données de l'onduleur
-        $response = $solax->parse();
-
-        // On crée un objet ProductionData si on a reçu des données
-        if ($response)
-        {
-            return $response->save();
+        try {
+            //code...
+            $response = $solax->parse();
+        } catch (\Throwable $th) {
+            $this->error($th->getMessage());
+            return true;
         }
+
+        // On sauvegarde l'objet ProductionData si on a reçu des données
+        return $response->save();
     }
 }
