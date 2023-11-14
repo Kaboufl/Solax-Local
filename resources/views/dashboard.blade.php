@@ -1,26 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+@extends('layouts.dashboard')
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-</head>
-<body class="bg-gray-100 grid grid-cols-1 lg:grid-cols-[auto_1fr]">
-
-    @include('partials.nav')
+@section('content')
 
     <div class="container mx-auto p-8">
         <h1 class="text-4xl font-bold mb-8">Production Photovoltaïque</h1>
 
-        <!-- Graphique de production -->
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <!-- Insérez ici le code du graphique (peut-être avec Chart.js, D3.js, etc.) -->
-            <!-- Assurez-vous d'ajuster le style pour correspondre au style d'Apple -->
+        <div class="w-full h-fit flex flex-row gap-8">
+                <x-meteo-display class="flex-grow rounded-lg shadow-md" />
+
+                <div class="bg-white rounded-lg shadow-md">
+                    <h2 class="text-xl font-semibold mb-4">Statut de l'onduleur :</h2>
+                    <p class="text-3xl font-bold">Opérationel</p>
+                </div>
+            
+
         </div>
+
+        <!-- Graphique de production -->
 
         <!-- Statistiques -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
@@ -41,5 +37,5 @@
         </div>
     </div>
 
-</body>
-</html>
+@endsection
+

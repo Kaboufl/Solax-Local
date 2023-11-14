@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Services\SolaxService;
+use App\Services\WeatherService;
 
 use App\Models\ProductionData;
 
@@ -25,6 +26,8 @@ Route::get('/', function (SolaxService $solax) {
  * Inspiration : https://soft-ui-dashboard-laravel.creative-tim.com/dashboard
  */
 Route::get('test', function () {
+
+    //$weather = app(WeatherService::class);
 
     return view('dashboard');
 });

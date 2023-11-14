@@ -1,26 +1,43 @@
-<nav class="lg:col-start-1 ml-4 my-4">
+<nav class="lg:col-start-1 ml-4 my-4 py-36">
     <h1></h1>
 
-    <ul class="flex flex-col list-none mb-0 pl-0 space-y-1">
+    @php($selected = true)
+
+    <ul class="flex flex-col list-none mb-0 pl-0 space-y-4">
+
         <li class="w-full antialiased">
-            <a class="mx-4 py-2.5 px-4 flex items-center flex-nowrap text-sm text-slate-500 font-medium transition-all" href="/test">
-                <div class="bg-gradient-to-tl from-[#CB0C9F] to-[#CB0C9F] p-1.5 rounded-lg h-8 w-8">
-                    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="#FFFFFF" class="bi bi-speedometer" stroke="#FFFFFF">
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            <path
-                                d="M8 2a.5.5 0 0 1 .5.5V4a.5.5 0 0 1-1 0V2.5A.5.5 0 0 1 8 2zM3.732 3.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 8a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 7.31A.91.91 0 1 0 8.85 8.569l3.434-4.297a.389.389 0 0 0-.029-.518z">
-                            </path>
-                            <path fill-rule="evenodd"
-                                d="M6.664 15.889A8 8 0 1 1 9.336.11a8 8 0 0 1-2.672 15.78zm-4.665-4.283A11.945 11.945 0 0 1 8 10c2.186 0 4.236.585 6.001 1.606a7 7 0 1 0-12.002 0z">
-                            </path>
-                        </g>
-                    </svg>
+            <a class="mx-4 py-2.5 px-4 flex items-center flex-nowrap text-sm text-slate-500 font-medium transition-all rounded-lg @if($selected) bg-white shadow-sm hover:bg-slate-200 @else hover:bg-white @endif" href="/test">
+                <div class="bg-gradient-to-tl from-[#CB0C9F] to-[#CB0C9F] p-1.5 rounded-lg h-10 w-10 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="opacity-80">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 01-1.125-1.125v-3.75zM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-8.25zM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-2.25z" />
+                    </svg>                      
                 </div>
-                <span class="nav-link-text ms-1">Dashboard</span>
+                <span class="ms-4 text-md">Dashboard</span>
             </a>
         </li>
+        
+        <li class="w-full antialiased">
+            <a class="mx-4 py-2.5 px-4 flex items-center flex-nowrap text-sm text-slate-500 font-medium transition-all rounded-lg @if($selected) bg-white shadow-sm hover:bg-slate-200 @else hover:bg-white @endif" href="/test">
+                <div class="bg-gradient-to-tl from-orange-400 to-orange-400 p-1.5 rounded-lg h-10 w-10 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="opacity-80">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                    </svg>                       
+                </div>
+                <span class="ms-4 text-md">Production en temps réel</span>
+            </a>
+        </li>
+        
+        <li class="w-full antialiased">
+            <a class="mx-4 py-2.5 px-4 flex items-center flex-nowrap text-sm text-slate-500 font-medium transition-all rounded-lg @if($selected) bg-white shadow-sm hover:bg-slate-200 @else hover:bg-white @endif" href="/test">
+                <div class="bg-gradient-to-tl from-green-400 to-green-400 p-1.5 rounded-lg h-10 w-10 text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="opacity-80">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+                    </svg>                                            
+                </div>
+                <span class="ms-4 text-md">Historique de production</span>
+            </a>
+        </li>
+
     </ul>
 
 

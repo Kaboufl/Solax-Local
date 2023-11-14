@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
                 return new \App\Services\SolaxService(env('ONDULEUR_IP'));
             }
         );
+        
     }
 
     /**
@@ -25,5 +26,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        $this->app->singleton(\App\Services\WeatherService::class, function ($app) {
+            return new \App\Services\WeatherService(env('ONDULEUR_LAT'), env('ONDULEUR_LONG'));
+        });
     }
 }
