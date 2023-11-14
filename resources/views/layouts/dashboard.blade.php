@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
-<body class="bg-gray-100 grid grid-cols-1 lg:grid-cols-[auto_1fr]">
+<body class="bg-gray-100 flex flex-col gap-4 font-figtree">
 
     @include('partials.nav')
 

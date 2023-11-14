@@ -29,6 +29,10 @@ Route::get('test', function () {
 
     //$weather = app(WeatherService::class);
 
+    $solax = app(SolaxService::class);
+
+    $productionData = $solax->parse();
+
     return view('dashboard');
 });
 

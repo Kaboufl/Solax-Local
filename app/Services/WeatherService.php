@@ -13,7 +13,7 @@ class WeatherService
 {
     private $weatherCodes = [
         0 => 'Ciel dégagé',
-        1 => 'Peu nuageux',
+        1 => 'Nuages épars',
         2 => 'Quelques nuages',
         3 => 'Ciel voilé',
 
@@ -57,12 +57,24 @@ class WeatherService
 
     private $lat, $long;
 
+    private $params = [];
+
     public function __construct($lat = null, $long = null)
     {
         $this->lat = $lat;
         $this->long = $long;
 
-        $this->getWeather()->decodeWeatherCode();
+        $this->setParams()->getWeather()->decodeWeatherCode();
+    }
+
+    private function setParams(): self
+    {
+        $params = collect($this->params);
+        $params->put('latitude', $this->lat);
+        $params->put('longitude', $this->long);
+        $params->put('current', 'temperature_2m,weather_code,is_day');
+        $this->params = $params;
+        return $this;
     }
 
     public function getWeather(): self
@@ -97,6 +109,6 @@ class WeatherService
         $code = $this->weatherCode;
         $code > 95 ? $code = 95 : $code;
         $this->stringWeatherCode = $this->weatherCodes[$code];
-        return $this;
+        return $this->stringWeatherCode;
     }
 }

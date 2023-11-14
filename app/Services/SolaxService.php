@@ -14,7 +14,6 @@ class SolaxService
     {
         $this->apiURL = $apiURL;
     }
-
     
     public
     $yieldToday, $yieldTotal,
@@ -80,7 +79,7 @@ class SolaxService
      * @param [type] $response
      * @return void
      */
-    public function parse($debug = false): ProductionData
+    public function parse($debug = true): ProductionData
     {
         if ($debug) {
             $file = Storage::disk('local')->get('example-response.json');
@@ -89,7 +88,7 @@ class SolaxService
         } else {
             $response = $this->get();
         }
-
+        
         if (!$response) {
             throw new \Exception("No response from inverter");
         }
