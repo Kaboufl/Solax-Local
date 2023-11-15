@@ -26,10 +26,13 @@
 			],
 			"settings": {}
 		},
-		"mounts": [
-			"type=bind,source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/${containerEnv:USER}/.ssh,readonly=true",
-		]
 	},
+	"containerEnv": {
+		"USER": "sail"
+	},
+	"mounts": [
+		"type=bind,source=/home/${localEnv:USER}/.ssh,target=/home/sail/.ssh,readonly=true",
+	],
 	"remoteUser": "sail",
 	"postCreateCommand": "chown -R 1000:1000 /var/www/html 2>/dev/null || true"
 	// "forwardPorts": [],
