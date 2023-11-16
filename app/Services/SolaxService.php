@@ -79,10 +79,10 @@ class SolaxService
      * @param [type] $response
      * @return void
      */
-    public function parse($debug = true): ProductionData
+    public function parse($debug = false): ProductionData
     {
         if ($debug) {
-            $file = Storage::disk('local')->get('example-response.json');
+            $file = file_get_contents(__DIR__ . '/../../resources/example-response.json');
             $response = json_decode($file, true);
             $this->statusCode = 200;
         } else {
@@ -140,7 +140,7 @@ class SolaxService
         ];
 
         try {
-            $response = Http::timeout(3)->asForm()
+            $response = Http::timeout(1)->asForm()
                             ->withHeaders($headers)
                             ->post($apiURL, $body);
 

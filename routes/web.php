@@ -31,9 +31,28 @@ Route::get('test', function () {
 
     $solax = app(SolaxService::class);
 
-    $productionData = $solax->parse();
+    $totalToday = ProductionData::select('yield_today')
+                                    ->whereDate('measured_at', today())
+                                    ->orderBy('measured_at', 'desc')
+                                    ->first()->yield_today;
 
-    return view('dashboard');
+    $averageToday = ProductionData::select('yield_today')
+                                    ->whereDate('measured_at', today())
+                                    ->avg('yield_today');
+
+    $averageToday = round($averageToday, 2);
+
+    $maxToday = ProductionData::select('grid_power')
+                                    ->whereDate('measured_at', today())
+                                    ->max('grid_power');
+    try {
+        $productionData = $solax->parse();
+    } catch (\Exception $e) {
+        $productionData = false;
+    }
+
+
+    return view('dashboard', compact('productionData', 'totalToday', 'averageToday', 'maxToday'));
 });
 
 Route::get('/laravel', function () {
